@@ -6,7 +6,8 @@ import {vanillaExtractPlugin} from "@vanilla-extract/vite-plugin";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [reactRefresh(), viteReactJsx(), tsconfigPaths(), vanillaExtractPlugin()],
+  // NOTE: vanillaExtractPlugin is placed after reactRefresh and before the others.
+  plugins: [reactRefresh(), vanillaExtractPlugin(), viteReactJsx(), tsconfigPaths()],
   server: {
     fs: {
       // Allow serving files from one level up to the project root
