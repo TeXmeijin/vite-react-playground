@@ -16,9 +16,10 @@ https://esbuild.github.io/
 
 https://rollupjs.org/
 
-つまるところViteは、古くから使われているwebpackの課題点に対して、ノーバンドルツールであるesbuildにHot Module Replacementを組み合わせたら開発体験がめっちゃ改善されるのでは、というアプローチと、本番ビルド時はまだesbuildはアーリーだからrollupをセットしておこうか、といったアプローチで解消を試みているツールということができる。
+つまるところViteは、古くから使われているwebpackの課題点に対して、ノーバンドルツールであるesbuildにHot Module Replacementを組み合わせたら開発体験がめっちゃ改善されるのでは、というアプローチと、本番ビルド時はまだesbuildはアーリーだからrollupを使っておこうか、といったアプローチで解消を試みているツールということができる。
 
 ### CSS Modulesについて
+
 esbuildだけではCSS Modulesに対応していないっぽい（https://github.com/evanw/esbuild/issues/20） が、Viteを通して利用すればCSS Modulesを使って開発ができる。
 
 https://vitejs.dev/guide/features.html#css-modules
@@ -49,7 +50,7 @@ ViteでReactを書くためには、公式が用意しているcreate-vite-app�
 yarn create @vitejs/app HOGE --template react-ts
 ```
 
-ただし、執筆時点ではViteはReact17以降で対応した、`import React`が不要になったFeatureに対応していない。
+ただし、執筆時点ではViteはReact17以降で対応した、`import React`が不要になった[Featureに対応していない](https://github.com/vitejs/vite/issues/712)。
 したがって、以下のように`vite-react-jsx`プラグインをインストールし、設定する必要がある。
 
 ```ts
