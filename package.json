@@ -1,0 +1,26 @@
+{
+  "version": "0.0.0",
+  "name": "vite-react-playground",
+  "scripts": {
+    "dev": "vite --port 20080",
+    "build": "tsc && vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@vanilla-extract/css": "1.1.0",
+    "@vanilla-extract/vite-plugin": "1.0.0",
+    "history": "5.0.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "rocon": "1.2.2",
+    "vite-react-jsx": "1.1.2",
+    "vite-tsconfig-paths": "3.3.13"
+  },
+  "devDependencies": {
+    "@types/react": "17.0.14",
+    "@types/react-dom": "17.0.9",
+    "@vitejs/plugin-react-refresh": "1.3.5",
+    "typescript": "4.3.5",
+    "vite": "2.2.3"
+  }
+}
