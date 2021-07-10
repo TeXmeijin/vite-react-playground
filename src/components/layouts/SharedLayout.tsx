@@ -1,13 +1,11 @@
-import {Header} from "~/components/layouts/common/Header";
-import {ReactNode} from "react";
+import { Header } from '~/components/layouts/common/Header';
+import { ReactNode } from 'react';
 
-export const SharedLayout = ({children}: {children: ReactNode}) => {
+export const SharedLayout = ({ children }: { children: ReactNode }) => {
   return (
     <main>
-      <Header></Header>
-      <article>
-        {children}
-      </article>
+      <Header />
+      <article>{children}</article>
     </main>
-  )
-}
+  );
+};

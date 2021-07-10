@@ -1,18 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react';
 import { HelmetProvider } from 'react-helmet-async';
-import {RoconRoot} from "rocon/react";
-import {Routes} from "~/components/routes/Routes";
+import { RoconRoot } from 'rocon/react';
+import { Routes } from '~/components/routes/Routes';
 
 function App() {
   return (
     <div>
       <HelmetProvider>
         <RoconRoot>
-          <Routes/>
+          <Routes />
         </RoconRoot>
       </HelmetProvider>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
