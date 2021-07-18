@@ -4,4 +4,7 @@ export const styles = {
     fontWeight: 'bold',
     fontSize: '2rem',
   }),
+  links: style({
+    marginTop: 16,
+  }),
 };

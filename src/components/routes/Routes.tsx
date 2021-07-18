@@ -1,8 +1,11 @@
-import {Rocon, useRoutes} from "rocon/react";
-import {TopPage} from "~/components/screens/TopPage";
+import { Rocon, useRoutes } from 'rocon/react';
+import { TopPage } from '~/components/screens/TopPage';
+import { ParallaxTest } from '~/components/screens/ParallaxTest';
 
-const topLevelRoutes = Rocon.Path().exact({action: () => <TopPage></TopPage>})
+export const topLevelRoutes = Rocon.Path()
+  .exact({ action: () => <TopPage /> })
+  .route('parallax', (route) => route.action(() => <ParallaxTest />));
 
 export const Routes = () => {
   return useRoutes(topLevelRoutes);
-}
+};
