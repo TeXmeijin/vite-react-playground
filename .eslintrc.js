@@ -15,6 +15,8 @@ module.exports = {
   plugins: ['react', '@typescript-eslint'],
   rules: {
     'require-jsdoc': 'off',
+    'new-cap': 'off',
+    'react/display-name': 'off',
     'react/prop-types': 'off',
     // React 17
     'react/jsx-uses-react': 'off',
