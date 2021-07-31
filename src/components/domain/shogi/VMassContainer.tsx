@@ -13,9 +13,10 @@ import { VMass } from '~/components/domain/shogi/VMass';
 
 type Props = {
   point: Point;
+  onMoveOrDrop(point: Point): void;
 };
 
-export const VMassContainer = ({ point }: Props) => {
+export const VMassContainer = ({ point, onMoveOrDrop }: Props) => {
   const [selectedPiece, setSelectedPiece] = useAtom(selectedPieceState);
   const [selectedHand, setSelectedHand] = useAtom(selectedHandState);
 
@@ -26,21 +27,25 @@ export const VMassContainer = ({ point }: Props) => {
   const [shogi] = useAtom(shogiState);
   const teban = shogi.turn;
 
-  const moveOrDrop = () => {
-    if (!selectedPiece) {
-      if (!selectedHand) return;
-
-      shogi.drop(point.x, point.y, selectedHand);
-      setSelectedHand(null);
-    } else {
-      // TODO: 成れるかどうかの確認
-      shogi.move(selectedPiece.x, selectedPiece.y, point.x, point.y, false);
-      setSelectedPiece(null);
-    }
-
-    setBoard(shogi.board);
-    setHands({ hands: shogi.hands });
-  };
+  // const moveOrDrop = () => {
+  //   if (!selectedPiece) {
+  //     if (!selectedHand) return;
+  //
+  //     shogi.drop(point.x, point.y, selectedHand);
+  //     setSelectedHand(null);
+  //   } else {
+  //     move(selectedPiece);
+  //   }
+  //
+  //   setBoard(shogi.board);
+  //   setHands({ hands: shogi.hands });
+  // };
+  //
+  // const move = (selectedPiece: Point, promote = false) => {
+  //   // TODO: 成れるかどうかの確認
+  //   shogi.move(selectedPiece.x, selectedPiece.y, point.x, point.y, promote);
+  //   setSelectedPiece(null);
+  // };
 
   const selected = useMemo(() => {
     return (
@@ -52,7 +57,7 @@ export const VMassContainer = ({ point }: Props) => {
 
   const onEmptyMassClick = () => {
     if (selected) {
-      moveOrDrop();
+      onMoveOrDrop(point);
       return;
     }
     setSelectedPiece(null);
@@ -62,10 +67,10 @@ export const VMassContainer = ({ point }: Props) => {
 
   const onPieceClick = () => {
     if (selected) {
-      moveOrDrop();
+      onMoveOrDrop(point);
       return;
     }
-    piece.color === teban ? setSelectedPiece(point) : setSelectedPiece(null);
+    piece.color === teban ? setSelectedPiece({ point, piece }) : setSelectedPiece(null);
   };
 
   return <VMass piece={piece} onClick={onPieceClick} selected={selected} />;

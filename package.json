@@ -7,6 +7,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@types/react-modal": "^3.12.1",
     "@vanilla-extract/css": "1.1.0",
     "@vanilla-extract/sprinkles": "0.4.3",
     "@vanilla-extract/vite-plugin": "1.0.0",
@@ -16,6 +17,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-helmet-async": "1.0.9",
+    "react-modal": "^3.14.3",
     "react-parallax": "^3.3.0",
     "recoil": "^0.4.0",
     "rocon": "1.2.2",

@@ -1,24 +1,73 @@
 import { VMassContainer } from '~/components/domain/shogi/VMassContainer';
-import { boardState, handsState, shogiState } from '~/domain/shogi/state/atoms';
+import {
+  boardState,
+  handsState,
+  myTebanState,
+  selectedHandState,
+  selectedPieceState,
+  shogiState,
+} from '~/domain/shogi/state/atoms';
 import { useAtom } from 'jotai';
 import { theBoardStyles } from '~/components/domain/shogi/VBoard.css';
 import { VHands } from '~/components/domain/shogi/VHands';
-import { Color } from 'shogi.js';
+import { Color, Piece } from 'shogi.js';
 import { enemyStyle } from '~/components/domain/shogi/VMass.css';
+import { Point } from '~/domain/shogi/types/types';
+import { useState } from 'react';
+import ReactModal from 'react-modal';
 
 export const VBoard = () => {
-  // FIX: 更新が走らない
   const [shogi] = useAtom(shogiState);
-
-  // 更新を走らせるための工夫
   const [board, setBoard] = useAtom(boardState);
   const [hands, setHands] = useAtom(handsState);
   shogiState.onMount = () => {
     setBoard(shogi.board);
     setHands({ hands: shogi.hands });
   };
+  const [openPromoteModal, setOpenPromoteModal] = useState(false);
+  const [cachedToPoint, setCachedToPoint] = useState<Point | null>(null);
 
-  // TODO 自分の手番を初期化
+  // コマを動かす処理は共通なのでここで持つ
+  const [selectedPiece, setSelectedPiece] = useAtom(selectedPieceState);
+  const [selectedHand, setSelectedHand] = useAtom(selectedHandState);
+  const onMoveOrDrop = (point: Point) => {
+    setCachedToPoint(point);
+
+    if (!selectedPiece) {
+      if (!selectedHand) return;
+
+      shogi.drop(point.x, point.y, selectedHand);
+      setSelectedHand(null);
+    } else {
+      if (Piece.canPromote(selectedPiece.piece.kind)) {
+        // 敵陣に入ったとき
+        if ((shogi.turn === Color.Black && point.y <= 3) || (shogi.turn === Color.White && point.y >= 7)) {
+          setOpenPromoteModal(true);
+          return;
+        }
+        // 敵陣から出たとき
+        if (
+          (shogi.turn === Color.Black && selectedPiece.point.y <= 3) ||
+          (shogi.turn === Color.White && selectedPiece.point.y >= 7)
+        ) {
+          setOpenPromoteModal(true);
+          return;
+        }
+      }
+      onMove(point);
+    }
+
+    setBoard(shogi.board);
+    setHands({ hands: shogi.hands });
+  };
+  const onMove = (point: Point, promote = false) => {
+    if (!selectedPiece) return;
+
+    shogi.move(selectedPiece.point.x, selectedPiece.point.y, point.x, point.y, promote);
+    setSelectedPiece(null);
+  };
+
+  // TODO 自分の手番を初期化(後手目線対応)
 
   return (
     <div className={theBoardStyles.container}>
@@ -28,13 +77,49 @@ export const VBoard = () => {
           return (
             <div key={xIndex}>
               {line.map((mass, yIndex) => {
-                return <VMassContainer point={{ x: xIndex + 1, y: yIndex + 1 }} key={yIndex} />;
+                return (
+                  <VMassContainer onMoveOrDrop={onMoveOrDrop} point={{ x: xIndex + 1, y: yIndex + 1 }} key={yIndex} />
+                );
               })}
             </div>
           );
         })}
       </div>
       {hands.hands && <VHands hands={hands.hands[Color.Black]} />}
+      <ReactModal style={customModalStyles} ariaHideApp={false} isOpen={openPromoteModal}>
+        <div>
+          <p>成りますか？</p>
+          <div>
+            <button
+              onClick={() => {
+                setOpenPromoteModal(false);
+                cachedToPoint && onMove(cachedToPoint);
+              }}
+            >
+              成らない
+            </button>
+            <button
+              onClick={() => {
+                setOpenPromoteModal(false);
+                cachedToPoint && onMove(cachedToPoint, true);
+              }}
+            >
+              成る
+            </button>
+          </div>
+        </div>
+      </ReactModal>
     </div>
   );
+};
+
+const customModalStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
 };
