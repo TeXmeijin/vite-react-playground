@@ -14,6 +14,13 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {
+    'react/self-closing-comp': [
+      'error',
+      {
+        component: true,
+        html: true,
+      },
+    ],
     'require-jsdoc': 'off',
     'new-cap': 'off',
     'react/display-name': 'off',
