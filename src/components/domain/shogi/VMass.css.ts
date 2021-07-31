@@ -8,7 +8,7 @@ const massStyle = style({
   height: 60,
   borderWidth: 1,
   borderStyle: 'solid',
-  borderColor: '#ccc',
+  borderColor: '#999',
 });
 
 const myTurnMassStyle = style({
@@ -16,7 +16,7 @@ const myTurnMassStyle = style({
 });
 
 const selectedMassStyle = style({
-  background: '#900',
+  background: '#dd7',
 });
 
 const enemyStyle = style({
