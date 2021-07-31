@@ -17,35 +17,13 @@ type Props = {
 };
 
 export const VMassContainer = ({ point, onMoveOrDrop }: Props) => {
-  const [selectedPiece, setSelectedPiece] = useAtom(selectedPieceState);
-  const [selectedHand, setSelectedHand] = useAtom(selectedHandState);
+  const [, setSelectedPiece] = useAtom(selectedPieceState);
 
-  const [board, setBoard] = useAtom(boardState);
-  const [, setHands] = useAtom(handsState);
+  const [board] = useAtom(boardState);
   const piece = board[point.x - 1][point.y - 1];
   const [moveableMass] = useAtom(movableMassState);
   const [shogi] = useAtom(shogiState);
   const teban = shogi.turn;
-
-  // const moveOrDrop = () => {
-  //   if (!selectedPiece) {
-  //     if (!selectedHand) return;
-  //
-  //     shogi.drop(point.x, point.y, selectedHand);
-  //     setSelectedHand(null);
-  //   } else {
-  //     move(selectedPiece);
-  //   }
-  //
-  //   setBoard(shogi.board);
-  //   setHands({ hands: shogi.hands });
-  // };
-  //
-  // const move = (selectedPiece: Point, promote = false) => {
-  //   // TODO: 成れるかどうかの確認
-  //   shogi.move(selectedPiece.x, selectedPiece.y, point.x, point.y, promote);
-  //   setSelectedPiece(null);
-  // };
 
   const selected = useMemo(() => {
     return (

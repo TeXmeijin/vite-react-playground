@@ -1,12 +1,5 @@
 import { VMassContainer } from '~/components/domain/shogi/VMassContainer';
-import {
-  boardState,
-  handsState,
-  myTebanState,
-  selectedHandState,
-  selectedPieceState,
-  shogiState,
-} from '~/domain/shogi/state/atoms';
+import { boardState, handsState, selectedHandState, selectedPieceState, shogiState } from '~/domain/shogi/state/atoms';
 import { useAtom } from 'jotai';
 import { theBoardStyles } from '~/components/domain/shogi/VBoard.css';
 import { VHands } from '~/components/domain/shogi/VHands';

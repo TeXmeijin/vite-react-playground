@@ -8,6 +8,6 @@ export const handsStyle = {
     alignItems: 'center',
   }),
   hand: style({
-    padding: 24,
+    padding: 12,
   }),
 };
