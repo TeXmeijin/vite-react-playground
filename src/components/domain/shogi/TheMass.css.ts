@@ -9,10 +9,15 @@ const massStyle = style({
   borderWidth: 1,
   borderStyle: 'solid',
   borderColor: '#ccc',
+  cursor: 'pointer',
+});
+
+const selectedMassStyle = style({
+  background: '#900',
 });
 
 const enemyStyle = style({
   transform: 'rotate(180deg)',
 });
 
-export { massStyle, enemyStyle };
+export { massStyle, enemyStyle, selectedMassStyle };

@@ -1,32 +1,19 @@
-import { ThePiece } from '~/components/domain/shogi/ThePiece';
+import { TheMass } from '~/components/domain/shogi/TheMass';
 import { boardStyle } from '~/components/domain/shogi/TheBoard.css';
-import { useRecoilState } from 'recoil';
-import { selectedPieceState, shogiState } from '~/domain/shogi/state/atoms';
-import { Point } from '~/domain/shogi/types/types';
+import { shogiState } from '~/domain/shogi/state/atoms';
+import { useAtom } from 'jotai';
 
 export const TheBoard = () => {
-  const [shogi] = useRecoilState(shogiState);
-  const [, setSelectedPiece] = useRecoilState(selectedPieceState);
+  const [shogi] = useAtom(shogiState);
   const board = shogi.board;
-
-  const onPieceClick = (point: Point) => {
-    setSelectedPiece(point);
-  };
 
   return (
     <div className={boardStyle}>
-      {board.map((line, lineIndex) => {
+      {board.map((line, xIndex) => {
         return (
-          <div key={lineIndex}>
-            {line.map((mass, index) => {
-              return (
-                <ThePiece
-                  movable={false}
-                  onPieceClick={() => onPieceClick({ x: lineIndex, y: index })}
-                  key={index}
-                  piece={mass}
-                />
-              );
+          <div key={xIndex}>
+            {line.map((mass, yIndex) => {
+              return <TheMass point={{ x: xIndex + 1, y: yIndex + 1 }} key={yIndex} piece={mass} />;
             })}
           </div>
         );

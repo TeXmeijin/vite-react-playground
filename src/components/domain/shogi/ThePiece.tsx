@@ -1,19 +1,10 @@
-import { Color, Piece } from 'shogi.js';
-import classNames from 'classnames';
-import { enemyStyle, massStyle } from '~/components/domain/shogi/ThePiece.css';
+import { Piece } from 'shogi.js';
+import { getPieceLabel } from '~/domain/shogi/presentation/piece';
 
 type Props = {
-  piece: Piece | null;
-  onPieceClick: () => void;
-  movable: boolean;
+  piece: Piece;
 };
 
-export const ThePiece = ({ piece, onPieceClick, movable }: Props) => {
-  if (!piece) return <span className={massStyle} />;
-
-  return (
-    <span className={classNames(piece.color === Color.White ? enemyStyle : '', massStyle)}>
-      <span onClick={onPieceClick}>{piece.kind}</span>
-    </span>
-  );
+export const ThePiece = ({ piece }: Props) => {
+  return <span>{getPieceLabel(piece)}</span>;
 };
