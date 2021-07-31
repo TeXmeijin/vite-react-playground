@@ -18,7 +18,19 @@ export const getPieceLabel = (piece: Piece): string => {
       return '飛';
     case 'OU':
       return '王';
+    case 'UM':
+      return '馬';
+    case 'TO':
+      return 'と';
+    case 'RY':
+      return '龍';
+    case 'NG':
+      return '成銀';
+    case 'NK':
+      return '成桂';
+    case 'NY':
+      return '成香';
     default:
-      return '';
+      return piece.kind;
   }
 };

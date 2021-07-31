@@ -1,9 +1,12 @@
-import { TheBoard } from '~/components/domain/shogi/TheBoard';
+import { Provider } from 'jotai';
+import { VBoard } from '~/components/domain/shogi/VBoard';
 
 export const ShogiTest = () => {
   return (
     <div>
-      <TheBoard />
+      <Provider>
+        <VBoard />
+      </Provider>
     </div>
   );
 };
