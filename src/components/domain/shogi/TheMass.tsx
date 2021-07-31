@@ -1,8 +1,8 @@
 import { Color, Piece } from 'shogi.js';
 import classNames from 'classnames';
-import { enemyStyle, massStyle, selectedMassStyle } from '~/components/domain/shogi/TheMass.css';
+import { enemyStyle, massStyle, myTurnMassStyle, selectedMassStyle } from '~/components/domain/shogi/TheMass.css';
 import { Point } from '~/domain/shogi/types/types';
-import { movableMassState, selectedPieceState } from '~/domain/shogi/state/atoms';
+import { movableMassState, myTebanState, selectedPieceState } from '~/domain/shogi/state/atoms';
 import { useAtom } from 'jotai';
 import { useMemo } from 'react';
 import { ThePiece } from '~/components/domain/shogi/ThePiece';
@@ -15,6 +15,7 @@ type Props = {
 export const TheMass = ({ piece, point }: Props) => {
   const [, setSelectedPiece] = useAtom(selectedPieceState);
   const [moveableMass] = useAtom(movableMassState);
+  const [teban] = useAtom(myTebanState);
 
   const selected = useMemo(() => {
     return (
@@ -24,16 +25,21 @@ export const TheMass = ({ piece, point }: Props) => {
     );
   }, [moveableMass]);
 
-  if (!piece) return <span className={classNames(massStyle, selected ? selectedMassStyle : '')} />;
+  const onEmptyPieceClick = () => {
+    setSelectedPiece(null);
+  };
+
+  if (!piece)
+    return <div onClick={onEmptyPieceClick} className={classNames(massStyle, selected ? selectedMassStyle : '')} />;
 
   const onPieceClick = () => {
-    setSelectedPiece(point);
+    piece.color === teban ? setSelectedPiece(point) : setSelectedPiece(null);
   };
 
   return (
     <div
       className={classNames(
-        piece.color === Color.White ? enemyStyle : '',
+        piece.color !== teban ? enemyStyle : myTurnMassStyle,
         massStyle,
         selected ? selectedMassStyle : ''
       )}

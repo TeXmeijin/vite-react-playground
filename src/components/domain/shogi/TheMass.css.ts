@@ -9,6 +9,9 @@ const massStyle = style({
   borderWidth: 1,
   borderStyle: 'solid',
   borderColor: '#ccc',
+});
+
+const myTurnMassStyle = style({
   cursor: 'pointer',
 });
 
@@ -20,4 +23,4 @@ const enemyStyle = style({
   transform: 'rotate(180deg)',
 });
 
-export { massStyle, enemyStyle, selectedMassStyle };
+export { massStyle, enemyStyle, selectedMassStyle, myTurnMassStyle };

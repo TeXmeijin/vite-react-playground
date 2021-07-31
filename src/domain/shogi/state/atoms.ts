@@ -1,4 +1,4 @@
-import { IMove, Shogi } from 'shogi.js';
+import { Color, IMove, Shogi } from 'shogi.js';
 import { Point } from '~/domain/shogi/types/types';
 import { atom } from 'jotai';
 
@@ -7,6 +7,8 @@ const shogiState = atom<Shogi>(
     preset: 'HIRATE',
   })
 );
+
+const myTebanState = atom<Color>(Color.Black);
 
 const selectedPieceState = atom<Point | null>(null);
 
@@ -18,4 +20,4 @@ const movableMassState = atom<IMove[]>((get) => {
   return shogi.getMovesFrom(selectedPiece.x, selectedPiece.y);
 });
 
-export { selectedPieceState, shogiState, movableMassState };
+export { selectedPieceState, shogiState, movableMassState, myTebanState };

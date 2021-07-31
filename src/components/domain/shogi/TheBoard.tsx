@@ -7,6 +7,8 @@ export const TheBoard = () => {
   const [shogi] = useAtom(shogiState);
   const board = shogi.board;
 
+  // TODO 自分の手番を初期化
+
   return (
     <div className={boardStyle}>
       {board.map((line, xIndex) => {
