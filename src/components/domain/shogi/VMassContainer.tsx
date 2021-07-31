@@ -1,17 +1,14 @@
-import classNames from 'classnames';
-import { enemyStyle, massStyle, myTurnMassStyle, selectedMassStyle } from '~/components/domain/shogi/VMass.css';
 import { Point } from '~/domain/shogi/types/types';
 import {
   boardState,
   handsState,
   movableMassState,
-  myTebanState,
+  selectedHandState,
   selectedPieceState,
   shogiState,
 } from '~/domain/shogi/state/atoms';
 import { useAtom } from 'jotai';
 import { useMemo } from 'react';
-import { VPiece } from '~/components/domain/shogi/VPiece';
 import { VMass } from '~/components/domain/shogi/VMass';
 
 type Props = {
@@ -20,18 +17,27 @@ type Props = {
 
 export const VMassContainer = ({ point }: Props) => {
   const [selectedPiece, setSelectedPiece] = useAtom(selectedPieceState);
+  const [selectedHand, setSelectedHand] = useAtom(selectedHandState);
+
   const [board, setBoard] = useAtom(boardState);
   const [, setHands] = useAtom(handsState);
   const piece = board[point.x - 1][point.y - 1];
   const [moveableMass] = useAtom(movableMassState);
-  const [initialTeban] = useAtom(myTebanState);
   const [shogi] = useAtom(shogiState);
   const teban = shogi.turn;
 
-  const move = () => {
-    if (!selectedPiece) return;
-    // TODO: 成れるかどうかの確認
-    shogi.move(selectedPiece.x, selectedPiece.y, point.x, point.y, false);
+  const moveOrDrop = () => {
+    if (!selectedPiece) {
+      if (!selectedHand) return;
+
+      shogi.drop(point.x, point.y, selectedHand);
+      setSelectedHand(null);
+    } else {
+      // TODO: 成れるかどうかの確認
+      shogi.move(selectedPiece.x, selectedPiece.y, point.x, point.y, false);
+      setSelectedPiece(null);
+    }
+
     setBoard(shogi.board);
     setHands({ hands: shogi.hands });
   };
@@ -46,7 +52,8 @@ export const VMassContainer = ({ point }: Props) => {
 
   const onEmptyMassClick = () => {
     if (selected) {
-      move();
+      moveOrDrop();
+      return;
     }
     setSelectedPiece(null);
   };
@@ -55,8 +62,7 @@ export const VMassContainer = ({ point }: Props) => {
 
   const onPieceClick = () => {
     if (selected) {
-      move();
-      setSelectedPiece(null);
+      moveOrDrop();
       return;
     }
     piece.color === teban ? setSelectedPiece(point) : setSelectedPiece(null);

@@ -7,4 +7,7 @@ export const handsStyle = {
     flexDirection: 'column-reverse',
     alignItems: 'center',
   }),
+  hand: style({
+    padding: 24,
+  }),
 };
