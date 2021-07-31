@@ -40,6 +40,20 @@ export const VBoard = () => {
       setSelectedHand(null);
     } else {
       if (Piece.canPromote(selectedPiece.piece.kind)) {
+        // 桂馬、香車、歩の場合は必ず成らなければならないケースが有る
+        if (selectedPiece.piece.kind === 'FU' || selectedPiece.piece.kind === 'KY') {
+          if ((shogi.turn === Color.Black && point.y <= 1) || (shogi.turn === Color.White && point.y >= 9)) {
+            onMove(point, true);
+            return;
+          }
+        }
+        if (selectedPiece.piece.kind === 'KE') {
+          if ((shogi.turn === Color.Black && point.y <= 2) || (shogi.turn === Color.White && point.y >= 8)) {
+            onMove(point, true);
+            return;
+          }
+        }
+
         // 敵陣に入ったとき
         if ((shogi.turn === Color.Black && point.y <= 3) || (shogi.turn === Color.White && point.y >= 7)) {
           setOpenPromoteModal(true);
@@ -65,6 +79,7 @@ export const VBoard = () => {
 
     shogi.move(selectedPiece.point.x, selectedPiece.point.y, point.x, point.y, promote);
     setSelectedPiece(null);
+    setSelectedHand(null);
   };
 
   // TODO 自分の手番を初期化(後手目線対応)
