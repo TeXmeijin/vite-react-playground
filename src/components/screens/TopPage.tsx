@@ -17,6 +17,9 @@ export const TopPage = () => {
           <li>
             <Link route={topLevelRoutes._['framer-motion']}>Framer Motion</Link>
           </li>
+          <li>
+            <Link route={topLevelRoutes._.linaria}>Linaria</Link>
+          </li>
         </ul>
       </SharedLayout>
     </>
