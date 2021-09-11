@@ -14,6 +14,9 @@ export const TopPage = () => {
           <li>
             <Link route={topLevelRoutes._.parallax}>Parallax Test</Link>
           </li>
+          <li>
+            <Link route={topLevelRoutes._['framer-motion']}>Framer Motion</Link>
+          </li>
         </ul>
       </SharedLayout>
     </>

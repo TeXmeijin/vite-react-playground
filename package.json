@@ -1,6 +1,7 @@
 {
   "version": "0.0.1",
   "name": "vite-react-playground",
+  "license": "MIT",
   "scripts": {
     "dev": "vite --port 20080",
     "build": "tsc && vite build",
@@ -9,9 +10,11 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@chakra-ui/react": "^1.6.7",
     "@vanilla-extract/css": "^1.1.0",
     "@vanilla-extract/sprinkles": "^0.4.3",
     "@vanilla-extract/vite-plugin": "^1.0.0",
+    "framer-motion": "^4.1.17",
     "history": "^5.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
